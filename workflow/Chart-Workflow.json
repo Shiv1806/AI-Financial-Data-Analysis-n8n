@@ -1,0 +1,163 @@
+{
+  "name": "Chart Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "input"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a8a9a12c-4593-4965-bb5e-55c6060cc411",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Create a Chart.js configuration using the chart data below.\n\nCHART DATA:\n{{ $json.input }}\n\nUse the data exactly as provided. Do not change any labels or numbers.\n\nReturn only a valid Chart.js configuration containing:\n- type\n- data\n- options",
+        "options": {
+          "systemMessage": "You are a chart generation assistant.\n\nConvert the supplied chart data into a valid Chart.js configuration.\n\nUse the supplied labels and numbers exactly.\nDo not invent or modify data.\n\nReturn only the structured chart configuration."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "647b9c61-d1ca-476b-90da-37c3bbf1ae39",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"type\": \"bar\",\n  \"data\": {\n    \"labels\": [\n      \"Department of Labor\",\n      \"Department of Defense\"\n    ],\n    \"datasets\": [\n      {\n        \"label\": \"Gross Cost (in Billions)\",\n        \"data\": [\n          62.5,\n          1115.4\n        ]\n      }\n    ]\n  },\n  \"options\": {\n    \"responsive\": true,\n    \"plugins\": {\n      \"title\": {\n        \"display\": true,\n        \"text\": \"Gross Cost Comparison\"\n      }\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        192
+      ],
+      "id": "4ee72073-6a34-48c9-a3b5-48ae9a6d499a",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "55299088-efaa-4c52-96e1-7907298f3ce4",
+              "name": "response",
+              "value": "=={{ \"https://quickchart.io/chart?width=400&c=\" + encodeURIComponent(JSON.stringify($json.response)) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        592,
+        0
+      ],
+      "id": "c390e21f-d6aa-4e5d-8fda-5ee8ce078c93",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "claude-sonnet-5",
+          "cachedResultName": "Claude Sonnet 5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.6,
+      "position": [
+        80,
+        208
+      ],
+      "id": "45b89b0b-a160-44ed-882e-2ae2f373668b",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        []
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b4b96547-7902-4938-be99-ba2aab2d22b0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b9048bb208c3ca91582a302e795ab90a0cf42f4ef683e2fe03193487dd04ea34"
+  },
+  "nodeGroups": [],
+  "id": "F0FSnkjvVhPRgMut",
+  "tags": []
+}
