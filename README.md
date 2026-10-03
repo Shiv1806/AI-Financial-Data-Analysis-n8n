@@ -201,10 +201,10 @@ AI-Financial-Data-Analysis-n8n/
 │   └── Chart-Workflow.json
 ├── screenshots/
 │   ├── chart-workflow-execution.png
-│   └── generated-chart-chat-demo.png
-│   └── Chat bot workflow execution
-│   └── 05-Chat Bot workflow
-│   └── 05-Chart workflow
+│   └── Chart workflow Screenshot
+│   └── Chat Bot workflow execution
+│   └── Chat Bot workflow Screenshot
+│   └── Generated-chart-chat.png
 
 ---
 
