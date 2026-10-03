@@ -9,8 +9,6 @@ The project uses a NocoDB table containing U.S. government financial information
 **NocoDB data view:**  
 https://app.nocodb.com/nc/view/930ca0ca-b5e5-489d-81eb-4a0b9000a95c
 
-> Note: access to the NocoDB view depends on the sharing/visibility settings of the NocoDB account.
-
 ---
 
 ## Project Overview
@@ -60,9 +58,6 @@ Natural-language answer     Chart Workflow
                              Chart AI Agent
                                   |
                                   v
-                       Structured Output Parser
-                                  |
-                                  v
                               Edit Fields
                                   |
                                   v
@@ -108,9 +103,6 @@ When Executed by Another Workflow
           AI Agent
               |
               v
-   Structured Output Parser
-              |
-              v
          Edit Fields
               |
               v
@@ -122,9 +114,8 @@ When Executed by Another Workflow
 1. Receives chart data from the main workflow.
 2. Sends the chart data to the Chart AI Agent.
 3. Generates a Chart.js configuration.
-4. Validates the structured output.
-5. Builds a QuickChart URL.
-6. Returns the visualization response to the calling workflow.
+4. Builds a QuickChart URL.
+5. Returns the visualization response to the calling workflow.
 
 ---
 
@@ -193,25 +184,6 @@ The chart-generation workflow uses a structured configuration similar to:
 - **Chart.js** — chart configuration
 - **JSON** — structured data exchange
 - **REST API** — data retrieval and visualization integration
-- **GitHub** — version control and portfolio presentation
-
----
-
-## Key Skills Demonstrated
-
-- Data analysis
-- AI workflow automation
-- REST API integration
-- JSON data handling
-- Natural-language data querying
-- Prompt engineering
-- Structured AI output
-- Data visualization
-- Workflow orchestration
-- n8n subworkflow design
-- NocoDB
-- Chart.js
-- QuickChart
 
 ---
 
@@ -223,23 +195,16 @@ AI-Financial-Data-Analysis-n8n/
 ├── README.md
 ├── LICENSE
 ├── .gitignore
-├── CV-Project-Entry.md
-├── GitHub-Short-Description.md
-├── UPLOAD-CHECKLIST.md
-│
+
 ├── workflow/
 │   ├── Main-Chat-Workflow.json
 │   └── Chart-Workflow.json
-│
 ├── screenshots/
-│   ├── 02-chart-workflow-execution.png
-│   └── 05-generated-chart-chat-demo.png
-│
-└── demo/
-    └── generated-chart-preview.png
-```
-
-The repository now includes the **actual exported n8n workflow JSON files** used to build the project.
+│   ├── chart-workflow-execution.png
+│   └── generated-chart-chat-demo.png
+│   └── Chat bot workflow execution
+│   └── 05-Chat Bot workflow
+│   └── 05-Chart workflow
 
 ---
 
@@ -255,28 +220,10 @@ Contains the chat trigger, NocoDB retrieval, AI Agent, memory, NocoDB tool and C
 
 `workflow/Chart-Workflow.json`
 
-Contains the workflow trigger, chart AI Agent, Structured Output Parser, QuickChart URL construction and AI model.
+Contains the workflow trigger, chart AI Agent, QuickChart URL construction and AI model.
 
 ---
 
-## Security
-
-API credentials and authentication tokens are intentionally **not included** in this repository.
-
-The exported Main Chat Workflow references an n8n NocoDB credential by its credential name/ID, but the actual token is not present in the exported JSON.
-
-Do not upload:
-
-- NocoDB API tokens
-- OpenAI API keys
-- Anthropic API keys
-- Google Gemini API keys
-- Other authentication credentials
-- Private environment variables
-
-Credentials should be configured directly inside n8n.
-
----
 
 ## Example User Flow
 
@@ -306,20 +253,6 @@ The Chart AI Agent produces a Chart.js configuration.
 ### Step 6 — QuickChart URL is created
 
 The workflow converts the configuration into a QuickChart URL and returns the visualization.
-
----
-
-## Future Improvements
-
-- Add additional chart types
-- Improve natural-language query handling
-- Add filtering by fiscal year
-- Add filtering by agency
-- Add trend analysis over time
-- Add automated financial reports
-- Add additional financial datasets
-- Improve chart formatting and styling
-- Add more advanced analytical questions
 
 ---
 
